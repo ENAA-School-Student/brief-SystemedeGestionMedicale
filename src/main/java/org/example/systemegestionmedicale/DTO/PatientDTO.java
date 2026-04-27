@@ -12,16 +12,13 @@ import java.time.LocalDate;
 public class PatientDTO {
     private Long id;
     @NotBlank(message = "Le nom est obligatoire")
-    @Size(max = 100, message = "Le nom ne doit pas dépasser 100 caractères")
     private String nom;
 
     @NotBlank(message = "Le prénom est obligatoire")
-    @Size(max = 100, message = "Le prénom ne doit pas dépasser 100 caractères")
     private String prenom;
 
     @NotBlank(message = "L'email est obligatoire")
     @Email(message = "Email invalide")
-    @Size(max = 150)
     private String email;
 
     @Size(min =10,max = 10,message = "Numéro de téléphone invalide")

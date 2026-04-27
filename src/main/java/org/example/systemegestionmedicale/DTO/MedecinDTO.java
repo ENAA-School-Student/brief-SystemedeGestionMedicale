@@ -3,7 +3,15 @@ package org.example.systemegestionmedicale.DTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MedecinDTO {
     private Long id;
 
@@ -17,8 +25,9 @@ public class MedecinDTO {
 
     @NotBlank(message = "L'email est obligatoire")
     @Email(message = "Email invalide")
+    @Size(max = 150)
     private String email;
-    @Size(min = 10,max = 10,message ="Numéro de téléphone invalide")
+
+    @Size(min = 10, max = 15, message = "Numéro de téléphone invalide")
     private String telephone;
 }
-
