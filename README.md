@@ -1,3 +1,3 @@
 # brief-Syst-me-de-Gestion-M-dicale
 
-![img.png](img.png)
+![img_1.png](img_1.png)
