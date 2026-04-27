@@ -7,6 +7,8 @@ import org.example.systemegestionmedicale.mapper.PatientMapper;
 import org.example.systemegestionmedicale.model.Patient;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class Patientservie {
@@ -28,6 +30,17 @@ public class Patientservie {
 
     public void delete(Long id){
         patientRepository.deleteById(id);
+    }
+
+    public List<PatientDTO> listerPatients(){
+        return patientRepository.findAll().stream()
+                .map(patient -> patientMapper.toDTO(patient)).toList();
+    }
+
+    public PatientDTO consulterPatient(Long id){
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("patient itrouvable avec id :" +id));
+        return patientMapper.toDTO(patient);
     }
 
 }

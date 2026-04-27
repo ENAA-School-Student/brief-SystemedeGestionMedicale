@@ -1,4 +1,41 @@
 package org.example.systemegestionmedicale.service;
 
+import lombok.RequiredArgsConstructor;
+import org.example.systemegestionmedicale.DTO.MedecinDTO;
+import org.example.systemegestionmedicale.DTO.PatientDTO;
+import org.example.systemegestionmedicale.Repository.MedecinRepository;
+import org.example.systemegestionmedicale.mapper.MedecinMapper;
+import org.example.systemegestionmedicale.model.Medecin;
+import org.example.systemegestionmedicale.model.Patient;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
 public class Medecinservice {
+    private final MedecinRepository medecinRepository;
+    private final MedecinMapper medecinMapper;
+
+    public MedecinDTO ajouterMedecin(MedecinDTO dto){
+        Medecin medecin=medecinMapper.toEntity(dto);
+        Medecin saved =medecinRepository.save(medecin);
+        return medecinMapper.toDTO(saved);
+    }
+    public MedecinDTO modifierPatient(Long id, MedecinDTO dto){
+         Medecin medecin= medecinRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("medecin introuvable"));
+        medecinMapper.updateEntityFromDto(dto,medecin);
+        return medecinMapper.toDTO(medecinRepository.save(medecin));
+    }
+
+    public void delete(Long id){
+        medecinRepository.deleteById(id);
+    }
+
+    public List<MedecinDTO> listerPatients(){
+        return medecinRepository.findAll().stream()
+                .map(medecin -> medecinMapper.toDTO(medecin)).toList();
+    }
+
 }
