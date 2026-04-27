@@ -1,4 +1,4 @@
 package org.example.systemegestionmedicale.Repository;
 
-public class DossierMedecalRepository {
+public class DossierMedicalRepository {
 }
