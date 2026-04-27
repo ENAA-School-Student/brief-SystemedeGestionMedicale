@@ -11,9 +11,4 @@ public interface RendezVousMapper {
     @Mapping(source="patientID" ,target = "patient.id")
     @Mapping(source="medecinId" ,target = "medecin.id")
     RendezVous toEntity(RendezVousDTO rendezVousDTO);
-
-
-
-
-
 }
