@@ -33,7 +33,7 @@ public class Medecinservice {
                 .orElseThrow(()->new RuntimeException("medecin introuvable"));
         return medecinMapper.toDTO(medecin);
     }
-    public MedecinDTO modifierPatient(Long id, MedecinDTO dto){
+    public MedecinDTO modifierMedecin(Long id, MedecinDTO dto){
          Medecin medecin= medecinRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("medecin introuvable"));
         medecinMapper.updateEntityFromDto(dto,medecin);
