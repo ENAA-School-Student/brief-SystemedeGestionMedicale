@@ -46,4 +46,13 @@ public class DossierMedicalservice {
         dossier.setObservations(observation);
         return dossierMedicalMapper.toDTO(dossierMedicalRepository.save(dossier));
     }
+
+    public DossierMedicalDTO consulterParPatient(Long patientId){
+        DossierMedical dossier = dossierMedicalRepository.findByPatientId(patientId)
+                .orElseThrow(() -> new RuntimeException("Dossier non trouvé pour ce patient"));
+        return dossierMedicalMapper.toDTO(dossier);
+    }
+
+
+
 }
