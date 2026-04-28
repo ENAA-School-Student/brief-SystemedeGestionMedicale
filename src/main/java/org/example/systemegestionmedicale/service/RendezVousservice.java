@@ -38,7 +38,7 @@ public class RendezVousservice {
 
     }
 
-    public RendezVousDTO modifierPatient(Long id,RendezVousDTO dto){
+    public RendezVousDTO modifierRendezVous(Long id,RendezVousDTO dto){
         RendezVous existe = rendezVousRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("rendezvous introuvable"));
         existe.setDateRendezVous(dto.getDateRendezVous());
