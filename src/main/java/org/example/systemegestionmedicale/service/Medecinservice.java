@@ -10,6 +10,8 @@ import org.example.systemegestionmedicale.model.Patient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,15 @@ public class Medecinservice {
         Medecin medecin=medecinMapper.toEntity(dto);
         Medecin saved =medecinRepository.save(medecin);
         return medecinMapper.toDTO(saved);
+    }
+    public List<MedecinDTO> getAllMedecins(){
+        return medecinRepository.findAll().stream().map(medecinMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+    public MedecinDTO getMedecinById(Long id){
+        Medecin medecin = medecinRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("medecin introuvable"));
+        return medecinMapper.toDTO(medecin);
     }
     public MedecinDTO modifierPatient(Long id, MedecinDTO dto){
          Medecin medecin= medecinRepository.findById(id)
