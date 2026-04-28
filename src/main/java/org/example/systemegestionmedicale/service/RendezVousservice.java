@@ -1,6 +1,7 @@
 package org.example.systemegestionmedicale.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.systemegestionmedicale.DTO.MedecinDTO;
 import org.example.systemegestionmedicale.DTO.RendezVousDTO;
 import org.example.systemegestionmedicale.Repository.MedecinRepository;
 import org.example.systemegestionmedicale.Repository.PatientRepository;
@@ -11,6 +12,9 @@ import org.example.systemegestionmedicale.model.Patient;
 import org.example.systemegestionmedicale.model.RendezVous;
 import org.example.systemegestionmedicale.model.StatutRendezVous;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +53,22 @@ public class RendezVousservice {
                 .orElseThrow(()->new RuntimeException("rendezvous introuvable"));
         rendezVous.setStatut(StatutRendezVous.ANNULE);
         rendezVousRepository.save(rendezVous);
+    }
+
+    public List<RendezVousDTO> listertous(){
+        return rendezVousRepository.findAll().stream()
+                .map(rendezVous -> rendezVousMapper.toDTO(rendezVous))
+                .collect(Collectors.toList());
+    }
+
+    public List<RendezVousDTO> rechercherParPatient(Long patientId){
+        return rendezVousRepository.findByPatientId(patientId).stream()
+                .map(rendezVousMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public List<RendezVousDTO> rechercherParMedecinId(Long medecinId){
+        return rendezVousRepository.findByMedecinId(medecinId).stream()
+                .map(rendezVousMapper::toDTO).collect(Collectors.toList());
     }
 
 
