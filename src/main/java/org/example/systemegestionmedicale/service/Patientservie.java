@@ -15,6 +15,7 @@ public class Patientservie {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
+
     public PatientDTO ajouterPatient(PatientDTO dto){
         Patient patient =patientMapper.toEntity(dto);
         Patient  saved =patientRepository.save(patient);

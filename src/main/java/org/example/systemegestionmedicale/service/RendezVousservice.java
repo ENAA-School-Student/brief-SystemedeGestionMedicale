@@ -1,4 +1,56 @@
 package org.example.systemegestionmedicale.service;
 
+import lombok.RequiredArgsConstructor;
+import org.example.systemegestionmedicale.DTO.RendezVousDTO;
+import org.example.systemegestionmedicale.Repository.MedecinRepository;
+import org.example.systemegestionmedicale.Repository.PatientRepository;
+import org.example.systemegestionmedicale.Repository.RendezVousRepository;
+import org.example.systemegestionmedicale.mapper.RendezVousMapper;
+import org.example.systemegestionmedicale.model.Medecin;
+import org.example.systemegestionmedicale.model.Patient;
+import org.example.systemegestionmedicale.model.RendezVous;
+import org.example.systemegestionmedicale.model.StatutRendezVous;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
 public class RendezVousservice {
+    private final RendezVousRepository rendezVousRepository;
+    private final RendezVousMapper rendezVousMapper;
+    private final PatientRepository patientRepository;
+    private final MedecinRepository medecinRepository;
+
+    public RendezVousDTO createRDV(RendezVousDTO dto){
+        Patient patient = patientRepository.findById(dto.getPatientId())
+                .orElseThrow(()-> new RuntimeException("patient non trouvé"));
+        Medecin medecin = medecinRepository.findById(dto.getMedecinId())
+                .orElseThrow(()-> new RuntimeException("medecin non trouvé"));
+        RendezVous rendezVous = rendezVousMapper.toEntity(dto);
+        rendezVous.setPatient(patient);
+        rendezVous.setMedecin(medecin);
+        rendezVous.setStatut(StatutRendezVous.EN_ATTENTE);
+        RendezVous saved=rendezVousRepository.save(rendezVous);
+        return rendezVousMapper.toDTO(saved);
+
+    }
+
+    public RendezVousDTO modifierPatient(Long id,RendezVousDTO dto){
+        RendezVous existe = rendezVousRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("rendezvous introuvable"));
+        existe.setDateRendezVous(dto.getDateRendezVous());
+        if (dto.getStatut() != null){
+            existe.setStatut(dto.getStatut());
+        }
+        return rendezVousMapper.toDTO(rendezVousRepository.save(existe));
+    }
+
+    public void annuleRDV(Long id){
+        RendezVous rendezVous = rendezVousRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("rendezvous introuvable"));
+        rendezVous.setStatut(StatutRendezVous.ANNULE);
+        rendezVousRepository.save(rendezVous);
+    }
+
+
+
 }
