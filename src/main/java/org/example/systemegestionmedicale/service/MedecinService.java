@@ -2,20 +2,17 @@ package org.example.systemegestionmedicale.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.MedecinDTO;
-import org.example.systemegestionmedicale.DTO.PatientDTO;
 import org.example.systemegestionmedicale.Repository.MedecinRepository;
 import org.example.systemegestionmedicale.mapper.MedecinMapper;
 import org.example.systemegestionmedicale.model.Medecin;
-import org.example.systemegestionmedicale.model.Patient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class Medecinservice {
+public class MedecinService {
     private final MedecinRepository medecinRepository;
     private final MedecinMapper medecinMapper;
 

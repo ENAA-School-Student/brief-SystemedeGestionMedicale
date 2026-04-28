@@ -3,8 +3,7 @@ package org.example.systemegestionmedicale.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.MedecinDTO;
-import org.example.systemegestionmedicale.DTO.PatientDTO;
-import org.example.systemegestionmedicale.service.Medecinservice;
+import org.example.systemegestionmedicale.service.MedecinService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,27 +12,26 @@ import java.util.List;
 @RequestMapping("/api/medecins")
 @RequiredArgsConstructor
 public class MedecinController {
-    private final Medecinservice medecinservice;
+    private final MedecinService medecinService;
     @PostMapping
     public MedecinDTO creatMedecin(@Valid @RequestBody MedecinDTO dto){
-        return medecinservice.ajouterMedecin(dto);
+        return medecinService.ajouterMedecin(dto);
     }
     @GetMapping
     public List<MedecinDTO> getAllMedecins(){
-        return medecinservice.getAllMedecins();
+        return medecinService.getAllMedecins();
     }
-    @GetMapping
+    @GetMapping("/{id}")
     public MedecinDTO getById(@PathVariable Long id){
-        return medecinservice.getMedecinById(id);
+        return medecinService.getMedecinById(id);
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public MedecinDTO updatePatient(@PathVariable Long id,@Valid @RequestBody MedecinDTO dto) {
-        return medecinservice.modifierMedecin(id, dto);
+        return medecinService.modifierMedecin(id, dto);
     }
     @DeleteMapping("/{id}")
     public void deleteMedecin(@PathVariable Long id){
-        medecinservice.delete(id);
+        medecinService.delete(id);
     }
-
 
 }

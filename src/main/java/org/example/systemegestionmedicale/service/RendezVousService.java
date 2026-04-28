@@ -1,7 +1,6 @@
 package org.example.systemegestionmedicale.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.systemegestionmedicale.DTO.MedecinDTO;
 import org.example.systemegestionmedicale.DTO.RendezVousDTO;
 import org.example.systemegestionmedicale.Repository.MedecinRepository;
 import org.example.systemegestionmedicale.Repository.PatientRepository;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class RendezVousservice {
+public class RendezVousService {
     private final RendezVousRepository rendezVousRepository;
     private final RendezVousMapper rendezVousMapper;
     private final PatientRepository patientRepository;

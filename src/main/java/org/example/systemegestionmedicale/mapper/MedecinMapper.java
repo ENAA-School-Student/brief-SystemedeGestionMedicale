@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "sring")
+@Mapper(componentModel = "spring")
 public interface MedecinMapper {
     MedecinDTO toDTO(Medecin medecin);
     Medecin toEntity(MedecinDTO medecinDTO);

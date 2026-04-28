@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class Patientservie {
+public class PatientServie {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 

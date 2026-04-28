@@ -3,7 +3,6 @@ package org.example.systemegestionmedicale.service;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.DossierMedicalDTO;
 import org.example.systemegestionmedicale.Repository.DossierMedicalRepository;
-import org.example.systemegestionmedicale.Repository.MedecinRepository;
 import org.example.systemegestionmedicale.Repository.PatientRepository;
 import org.example.systemegestionmedicale.mapper.DossierMedicalMapper;
 import org.example.systemegestionmedicale.model.DossierMedical;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
-public class DossierMedicalservice {
+public class DossierMedicalService {
     private final DossierMedicalRepository dossierMedicalRepository;
     private final DossierMedicalMapper dossierMedicalMapper;
     private final PatientRepository patientRepository;
@@ -22,7 +21,7 @@ public class DossierMedicalservice {
     public DossierMedicalDTO creerDossier(DossierMedicalDTO dto){
         Patient patient = patientRepository.findById(dto.getPatientId())
                 .orElseThrow(()->new RuntimeException("patient introuvable"));
-        if (dossierMedicalRepository.existedByPatientId(dto.getPatientId())){
+        if (dossierMedicalRepository.existsByPatientId(dto.getPatientId())){
             throw new RuntimeException("ce patient a deja un dossier");
         }
         DossierMedical dossier = dossierMedicalMapper.toEntity(dto);
@@ -52,7 +51,4 @@ public class DossierMedicalservice {
                 .orElseThrow(() -> new RuntimeException("Dossier non trouvé pour ce patient"));
         return dossierMedicalMapper.toDTO(dossier);
     }
-
-
-
 }
