@@ -22,7 +22,7 @@ public class DossierMedicalservice {
     public DossierMedicalDTO creerDossier(DossierMedicalDTO dto){
         Patient patient = patientRepository.findById(dto.getPatientId())
                 .orElseThrow(()->new RuntimeException("patient introuvable"));
-        if (dossierMedicalRepository.findByPatientId(dto.getPatientId()).isPresent){
+        if (dossierMedicalRepository.findByPatientId(dto.getPatientId()).isPresent()){
             throw new RuntimeException("ce patient a deja un dossier");
         }
         DossierMedical dossier = dossierMedicalMapper.toEntity(dto);

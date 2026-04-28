@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface DossierMedicalRepository extends JpaRepository<DossierMedical,Long> {
     List<DossierMedical> findByPatientId(Long patientId);
+    Boolean existedByPatientId(Long patientId);
 }
