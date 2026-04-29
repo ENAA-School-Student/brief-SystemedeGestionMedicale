@@ -34,14 +34,14 @@ public class DossierMedicalService {
 
     public DossierMedicalDTO ajouterDiagnostic(Long id, String diagnostic){
         DossierMedical dossier = dossierMedicalRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("dossier medecal introuvable"));
+                .orElseThrow(()->new RuntimeException("dossier medical introuvable"));
         dossier.setDiagnostic(diagnostic);
         return dossierMedicalMapper.toDTO(dossierMedicalRepository.save(dossier));
 
     }
     public DossierMedicalDTO ajouterObservation(Long id, String observation){
         DossierMedical dossier = dossierMedicalRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("dossier medecal introuvable"));
+                .orElseThrow(()->new RuntimeException("dossier medical introuvable"));
         dossier.setObservations(observation);
         return dossierMedicalMapper.toDTO(dossierMedicalRepository.save(dossier));
     }

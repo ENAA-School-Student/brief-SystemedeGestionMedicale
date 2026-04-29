@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PatientServie {
+public class PatientService {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
@@ -36,11 +36,6 @@ public class PatientServie {
     public PatientDTO modifierPatient(Long id,PatientDTO dto){
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("pateint introuvable"));
-        patient.setNom(patient.getNom());
-        patient.setPrenom(patient.getPrenom());
-        patient.setEmail(patient.getEmail());
-        patient.setTelephone(patient.getTelephone());
-        patient.setDateNaissance(patient.getDateNaissance());
         patientMapper.updateEntityFromDto(dto,patient);
         return patientMapper.toDTO(patientRepository.save(patient));
     }

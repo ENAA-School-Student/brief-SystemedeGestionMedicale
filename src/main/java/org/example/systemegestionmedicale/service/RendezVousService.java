@@ -69,7 +69,4 @@ public class RendezVousService {
         return rendezVousRepository.findByMedecinId(medecinId).stream()
                 .map(rendezVousMapper::toDTO).collect(Collectors.toList());
     }
-
-
-
 }
