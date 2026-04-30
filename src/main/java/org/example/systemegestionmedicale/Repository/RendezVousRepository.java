@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 public interface RendezVousRepository extends JpaRepository<RendezVous,Long> {
     List<RendezVous> findByPatientId(Long patientId);
-    @Query("select r from RendezVous r where r.medecin=:id")
-    List<RendezVous> findByMedecinId(@Param("id") Long medecinId);
+    List<RendezVous> findByMedecinId(Long medecinId);
 }

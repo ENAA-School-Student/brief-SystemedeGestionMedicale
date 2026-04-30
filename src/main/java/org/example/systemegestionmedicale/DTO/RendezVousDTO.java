@@ -20,7 +20,8 @@ public class RendezVousDTO {
     @NotNull(message = "La date du rendez-vous est obligatoire")
     @FutureOrPresent(message = "La date du rendez-vous doit être présente ou futur")
     private LocalDateTime dateRendezVous;
-    @Pattern(regexp = "EN_ATTENTE|CONFIRME|ANNULE|TERMINE", message = "Le statut doit être EN_ATTENTE, CONFIRME , ANNULE OU TERMINE")
+
+   @NotNull(message = "statut obligatoire")
     private StatutRendezVous statut;
 
     @NotNull(message = "L'ID du patient est obligatoire")
