@@ -22,6 +22,8 @@ class DossierMedicalServiceTest {
     void creerDossier() {
         PatientDTO patient = new PatientDTO();
         patient.setNom("Sara");
+        patient.setPrenom("Sami");
+        patient.setEmail("sara.sami@example.com");
         PatientDTO savedPatient = patientService.ajouterPatient(patient);
 
 
@@ -49,6 +51,8 @@ class DossierMedicalServiceTest {
 
         PatientDTO patient = new PatientDTO();
         patient.setNom("Sara");
+        patient.setPrenom("Sami");
+        patient.setEmail("sara.diagnostic@example.com");
         PatientDTO savedPatient = patientService.ajouterPatient(patient);
 
 

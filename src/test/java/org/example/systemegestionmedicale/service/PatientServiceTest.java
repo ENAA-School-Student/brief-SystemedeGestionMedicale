@@ -19,6 +19,8 @@ class PatientServiceTest {
     void ajouterPatient() {
         PatientDTO dto = new PatientDTO();
         dto.setNom("Ali");
+        dto.setPrenom("Ahmed");
+        dto.setEmail("ali.ahmed@example.com");
 
 
         PatientDTO result = patientService.ajouterPatient(dto);

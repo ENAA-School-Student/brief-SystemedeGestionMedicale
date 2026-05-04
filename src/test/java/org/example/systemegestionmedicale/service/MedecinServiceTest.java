@@ -20,11 +20,15 @@ class MedecinServiceTest {
     void modifierMedecin() {
         MedecinDTO dto = new MedecinDTO();
         dto.setNom("Ali");
+        dto.setSpecialite("Cardiologue");
+        dto.setEmail("ali.med@example.com");
 
-        MedecinDTO saved = medecinService.modifierMedecin(1L,dto);
+        MedecinDTO saved = medecinService.ajouterMedecin(dto);
 
         MedecinDTO updateDTO = new MedecinDTO();
         updateDTO.setNom("Karim");
+        updateDTO.setSpecialite("Cardiologue");
+        updateDTO.setEmail("ali.med@example.com");
 
 
         MedecinDTO updated = medecinService.modifierMedecin(saved.getId(), updateDTO);
