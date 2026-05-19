@@ -9,6 +9,7 @@ import org.example.systemegestionmedicale.DTO.AuthResponse;
 import org.example.systemegestionmedicale.DTO.LoginRequest;
 import org.example.systemegestionmedicale.DTO.RegisterRequest;
 import org.example.systemegestionmedicale.Repository.UserRepository;
+import org.example.systemegestionmedicale.model.Role;
 import org.example.systemegestionmedicale.model.User;
 import org.example.systemegestionmedicale.security.JwtUtil;
 import org.springframework.security.authentication.*;
@@ -32,12 +33,13 @@ public class AuthService {
                 .password(
                         passwordEncoder.encode(request.getPassword())
                 )
+                .role(request.getRole())
                 .build();
 
         userRepository.save(user);
 
         String token =
-                jwtUtil.generateToken(user.getUsername());
+                jwtUtil.generateToken(user);
 
         return new AuthResponse(token);
     }
@@ -50,9 +52,10 @@ public class AuthService {
                         request.getPassword()
                 )
         );
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 
         String token =
-                jwtUtil.generateToken(request.getUsername());
+                jwtUtil.generateToken(user);
 
         return new AuthResponse(token);
     }
