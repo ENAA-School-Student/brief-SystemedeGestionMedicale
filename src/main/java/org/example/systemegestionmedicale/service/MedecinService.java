@@ -5,6 +5,8 @@ import org.example.systemegestionmedicale.DTO.MedecinDTO;
 import org.example.systemegestionmedicale.Repository.MedecinRepository;
 import org.example.systemegestionmedicale.mapper.MedecinMapper;
 import org.example.systemegestionmedicale.model.Medecin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +46,12 @@ public class MedecinService {
     public List<MedecinDTO> listerPatients(){
         return medecinRepository.findAll().stream()
                 .map(medecin -> medecinMapper.toDTO(medecin)).toList();
+    }
+
+    public Page<MedecinDTO> getAllMedecins(Pageable pageable){
+        return medecinRepository.findAll(pageable).map(medecinMapper::toDTO);
+    }
+    public Page<MedecinDTO> searchBySpecialite(String specialite, Pageable pageable){
+        return medecinRepository.searchBySpecialite(specialite,pageable).map(medecinMapper::toDTO);
     }
 }

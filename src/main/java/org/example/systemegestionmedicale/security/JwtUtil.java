@@ -24,7 +24,7 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
-    // Générer la clé secrète
+
     private SecretKey getSigningKey() {
 
         return Keys.hmacShaKeyFor(
@@ -32,7 +32,6 @@ public class JwtUtil {
         );
     }
 
-    // Crée une chaîne cryptée contenant le username, la date d'émission et la date d'expiration.
     public String generateToken(User user) {
         Map<String,Object> claims = new HashMap<>();
         claims.put("role",user.getRole().name());
@@ -48,13 +47,12 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Extraire username depuis token
+
     public String extractUsername(String token) {
 
         return extractClaim(token, Claims::getSubject);
     }
 
-    // Extraire n'importe quel claim
     public <T> T extractClaim(
             String token,
             Function<Claims, T> claimsResolver
@@ -69,7 +67,7 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    // Vérifier si token valide
+
     public boolean validateToken(
             String token,
             UserDetails userDetails
@@ -81,7 +79,7 @@ public class JwtUtil {
                 && !isTokenExpired(token);
     }
 
-    // Vérifier expiration
+
     private boolean isTokenExpired(String token) {
 
         return extractClaim(

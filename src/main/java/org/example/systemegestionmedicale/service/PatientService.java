@@ -7,6 +7,8 @@ import org.example.systemegestionmedicale.Repository.PatientRepository;
 import org.example.systemegestionmedicale.mapper.PatientMapper;
 import org.example.systemegestionmedicale.model.DossierMedical;
 import org.example.systemegestionmedicale.model.Patient;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -58,6 +60,12 @@ public class PatientService {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("patient itrouvable avec id :" +id));
         return patientMapper.toDTO(patient);
+    }
+    public Page<PatientDTO> getAllPatient(Pageable pageable){
+        return patientRepository.findAll(pageable).map(patientMapper::toDTO);
+    }
+    public Page<PatientDTO> chercherByNom(String nom,Pageable pageable){
+        return patientRepository.findByNom(nom,pageable).map(patient -> patientMapper.toDTO(patient));
     }
 
 }

@@ -27,28 +27,17 @@ public class JwtFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-
-        // prend l'autorisation de header
         String authHeader = request.getHeader("Authorization");
-
-        // si y a pas de token
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-
             filterChain.doFilter(request, response);
             return;
         }
 
-        // sort de token
         String token = authHeader.substring(7);
-
-        // prend username de  token
         String username = jwtUtil.extractUsername(token);
-
-        // prend  user de  database
         UserDetails userDetails =
                 customUserDetailsService.loadUserByUsername(username);
 
-        //verification de tocken
         if (jwtUtil.validateToken(token, userDetails)) {
 
             UsernamePasswordAuthenticationToken authToken =
@@ -58,12 +47,12 @@ public class JwtFilter extends OncePerRequestFilter {
                             userDetails.getAuthorities()
                     );
 
-            //  dit a Spring user connected
+
             SecurityContextHolder.getContext()
                     .setAuthentication(authToken);
         }
 
-        // finir avec request
+
         filterChain.doFilter(request, response);
     }
 }

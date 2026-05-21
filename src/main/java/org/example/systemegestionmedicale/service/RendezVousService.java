@@ -10,8 +10,10 @@ import org.example.systemegestionmedicale.model.Medecin;
 import org.example.systemegestionmedicale.model.Patient;
 import org.example.systemegestionmedicale.model.RendezVous;
 import org.example.systemegestionmedicale.model.StatutRendezVous;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,4 +75,11 @@ public class RendezVousService {
     public Void deleteAllRDVPourMedecin(Long medecinId){
         return rendezVousRepository.deleteByMedecinId(medecinId);
     }
+    public Page<RendezVousDTO> getAllRendezvous(Pageable pageable){
+        return rendezVousRepository.findAll(pageable).map(rendezVousMapper::toDTO);
+    }
+    public Page<RendezVousDTO> searchByStatut(StatutRendezVous statut, Pageable pageable){
+        return rendezVousRepository.searchByStatut(statut,pageable).map(rendezVousMapper::toDTO);
+    }
+
 }
