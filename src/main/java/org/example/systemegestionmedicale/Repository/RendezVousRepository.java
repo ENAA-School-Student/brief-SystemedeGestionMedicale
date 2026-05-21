@@ -19,5 +19,7 @@ public interface RendezVousRepository extends JpaRepository<RendezVous,Long> {
 
     Void deleteByMedecinId(@Param("medecinId") Long medecinId);
 
-    Page<RendezVous> searchByStatut(StatutRendezVous statut, Pageable pageable);
+    Page<RendezVous> findByStatut(StatutRendezVous statut, Pageable pageable);
+
+    Page<RendezVous> findAll(Pageable pageable);
 }

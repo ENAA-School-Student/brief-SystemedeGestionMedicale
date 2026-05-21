@@ -5,7 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.RendezVousDTO;
+import org.example.systemegestionmedicale.model.StatutRendezVous;
 import org.example.systemegestionmedicale.service.RendezVousService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,4 +49,15 @@ public class RendezVousController {
     public List<RendezVousDTO> chercherParMedecin(@PathVariable Long medecinId){
         return rendezVousService.rechercherParMedecinId(medecinId);
     }
+
+     @Operation(summary = "Lister tous les rendez-vous avec pagination et tri (ex: ?sort=dateRendezVous,asc)")
+     @GetMapping
+     public Page<RendezVousDTO> listertous(Pageable pageable) {
+            return rendezVousService.getAllRendezvous(pageable);
+        }
+        @Operation(summary = "Rechercher rendez-vous par statut avec pagination")
+        @GetMapping("/search")
+        public Page<RendezVousDTO> searchByStatut(@RequestParam StatutRendezVous statut, Pageable pageable) {
+            return rendezVousService.searchByStatut(statut, pageable);
+         }
 }

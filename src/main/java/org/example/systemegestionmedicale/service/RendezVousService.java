@@ -11,9 +11,9 @@ import org.example.systemegestionmedicale.model.Patient;
 import org.example.systemegestionmedicale.model.RendezVous;
 import org.example.systemegestionmedicale.model.StatutRendezVous;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
