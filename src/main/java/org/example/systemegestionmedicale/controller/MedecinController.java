@@ -45,8 +45,8 @@ public class MedecinController {
         }
 
         @Operation(summary = "Rechercher médecin par spécialité avec pagination")
-   @GetMapping("/search")
-   public Page<MedecinDTO> searchBySpecialite(@RequestParam String specialite, Pageable pageable) {
+        @GetMapping("/search")
+          public Page<MedecinDTO> searchBySpecialite(@RequestParam String specialite, Pageable pageable) {
            return medecinService.searchBySpecialite(specialite, pageable);
         }
 

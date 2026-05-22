@@ -52,6 +52,6 @@ public class MedecinService {
         return medecinRepository.findAll(pageable).map(medecinMapper::toDTO);
     }
     public Page<MedecinDTO> searchBySpecialite(String specialite, Pageable pageable){
-        return medecinRepository.searchBySpecialite(specialite,pageable).map(medecinMapper::toDTO);
+        return medecinRepository.findBySpecialite(specialite,pageable).map(medecinMapper::toDTO);
     }
 }

@@ -79,7 +79,7 @@ public class RendezVousService {
         return rendezVousRepository.findAll(pageable).map(rendezVousMapper::toDTO);
     }
     public Page<RendezVousDTO> searchByStatut(StatutRendezVous statut, Pageable pageable){
-        return rendezVousRepository.searchByStatut(statut,pageable).map(rendezVousMapper::toDTO);
+        return rendezVousRepository.findByStatut(statut,pageable).map(rendezVousMapper::toDTO);
     }
 
 }

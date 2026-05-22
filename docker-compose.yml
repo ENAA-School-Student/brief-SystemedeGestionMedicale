@@ -12,7 +12,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/systemegestionmedicale
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 2002
+      SPRING_DATASOURCE_PASSWORD: nouha23
     networks:
       - app_network
 
@@ -26,11 +26,11 @@ services:
       - app_network
     environment:
       MYSQL_DATABASE: systemegestionmedicale
-      MYSQL_ROOT_PASSWORD: 2002
+      MYSQL_ROOT_PASSWORD: nouha23
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p2002"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pnouha23"]
       timeout: 5s
       retries: 10
       interval: 10s
