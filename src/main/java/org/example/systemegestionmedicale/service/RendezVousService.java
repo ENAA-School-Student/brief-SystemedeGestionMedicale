@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,6 +81,9 @@ public class RendezVousService {
     }
     public Page<RendezVousDTO> searchByStatut(StatutRendezVous statut, Pageable pageable){
         return rendezVousRepository.findByStatut(statut,pageable).map(rendezVousMapper::toDTO);
+    }
+    public Page<RendezVousDTO> searchByDateRDV(Date date_rendez_vous,Pageable pageable){
+        return rendezVousRepository.findByDate_rendez_vous(date_rendez_vous,pageable).map(rendezVousMapper::toDTO);
     }
 
 }

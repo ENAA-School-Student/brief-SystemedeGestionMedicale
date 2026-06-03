@@ -28,6 +28,14 @@ public class MedecinDTO {
     @Size(max = 150)
     private String email;
 
+    @NotBlank(message = "Le nom d'utilisateur est obligatoire")
+    private String username;
+
+    @NotBlank(message = "Le mot de passe est obligatoire")
+    private String password;
+
+    private org.example.systemegestionmedicale.model.Role role;
+
     @Size(min = 10, max = 15, message = "Numéro de téléphone invalide")
     private String telephone;
 }

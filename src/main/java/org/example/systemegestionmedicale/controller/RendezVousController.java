@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -60,5 +61,9 @@ public class RendezVousController {
     @GetMapping("/search")
     public Page<RendezVousDTO> searchByStatut(@RequestParam StatutRendezVous statut, Pageable pageable) {
         return rendezVousService.searchByStatut(statut, pageable);
+    }
+    @GetMapping("/search")
+    public Page<RendezVousDTO> searchByDateRDV(@RequestParam Date date_rendez_vous,Pageable pageable){
+        return rendezVousService.searchByDateRDV(date_rendez_vous,pageable);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +23,5 @@ public interface RendezVousRepository extends JpaRepository<RendezVous,Long> {
     Page<RendezVous> findByStatut(StatutRendezVous statut, Pageable pageable);
 
     Page<RendezVous> findAll(Pageable pageable);
+    Page<RendezVous> findByDate_rendez_vous(Date date_rendez_vous,Pageable pageable);
 }

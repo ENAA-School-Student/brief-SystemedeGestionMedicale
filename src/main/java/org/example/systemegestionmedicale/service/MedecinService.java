@@ -17,9 +17,15 @@ import java.util.stream.Collectors;
 public class MedecinService {
     private final MedecinRepository medecinRepository;
     private final MedecinMapper medecinMapper;
+    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
     public MedecinDTO ajouterMedecin(MedecinDTO dto){
         Medecin medecin=medecinMapper.toEntity(dto);
+        medecin.setUsername(dto.getUsername());
+        medecin.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (medecin.getRole() == null) {
+            medecin.setRole(org.example.systemegestionmedicale.model.Role.MEDECIN);
+        }
         Medecin saved =medecinRepository.save(medecin);
         return medecinMapper.toDTO(saved);
     }
