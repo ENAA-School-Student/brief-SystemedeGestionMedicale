@@ -69,4 +69,8 @@ public class RendezVousService {
         return rendezVousRepository.findByMedecinId(medecinId).stream()
                 .map(rendezVousMapper::toDTO).collect(Collectors.toList());
     }
+
+    public Void deleteAllRDVPourMedecin(Long medecinId){
+        return rendezVousRepository.deleteByMedecinId(medecinId);
+    }
 }

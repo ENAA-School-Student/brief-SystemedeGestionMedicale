@@ -45,5 +45,4 @@ public class MedecinService {
         return medecinRepository.findAll().stream()
                 .map(medecin -> medecinMapper.toDTO(medecin)).toList();
     }
-
 }

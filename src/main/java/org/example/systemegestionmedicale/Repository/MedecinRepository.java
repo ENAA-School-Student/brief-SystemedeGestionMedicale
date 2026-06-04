@@ -13,5 +13,4 @@ import java.util.Optional;
 public interface MedecinRepository extends JpaRepository<Medecin,Long> {
      @Query("select m from Medecin m where m.email=:email")
      Optional<Medecin> findMedecinByEmail(@Param("email") String email);
-    List<Medecin> findBySpecialite(String specialite);
 }
