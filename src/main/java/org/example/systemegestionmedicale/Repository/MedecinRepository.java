@@ -1,6 +1,8 @@
 package org.example.systemegestionmedicale.Repository;
 
 import org.example.systemegestionmedicale.model.Medecin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +15,5 @@ import java.util.Optional;
 public interface MedecinRepository extends JpaRepository<Medecin,Long> {
      @Query("select m from Medecin m where m.email=:email")
      Optional<Medecin> findMedecinByEmail(@Param("email") String email);
+     Page<Medecin> findBySpecialite(String specialite, Pageable pageable);
 }

@@ -2,6 +2,7 @@ package org.example.systemegestionmedicale.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -10,20 +11,13 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Patient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, length = 100)
-    private String nom;
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@PrimaryKeyJoinColumn(name = "id")
+public class Patient extends User {
 
     @Column(nullable = false, length = 100)
     private String prenom;
-
-    @Column(nullable = false, unique = true, length = 150)
-    private String email;
 
     @Column(length = 20)
     private String telephone;

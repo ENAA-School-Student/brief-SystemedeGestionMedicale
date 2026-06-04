@@ -5,6 +5,8 @@ import org.example.systemegestionmedicale.DTO.MedecinDTO;
 import org.example.systemegestionmedicale.Repository.MedecinRepository;
 import org.example.systemegestionmedicale.mapper.MedecinMapper;
 import org.example.systemegestionmedicale.model.Medecin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,15 @@ import java.util.stream.Collectors;
 public class MedecinService {
     private final MedecinRepository medecinRepository;
     private final MedecinMapper medecinMapper;
+    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
     public MedecinDTO ajouterMedecin(MedecinDTO dto){
         Medecin medecin=medecinMapper.toEntity(dto);
+        medecin.setUsername(dto.getUsername());
+        medecin.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (medecin.getRole() == null) {
+            medecin.setRole(org.example.systemegestionmedicale.model.Role.MEDECIN);
+        }
         Medecin saved =medecinRepository.save(medecin);
         return medecinMapper.toDTO(saved);
     }
@@ -44,5 +52,12 @@ public class MedecinService {
     public List<MedecinDTO> listerPatients(){
         return medecinRepository.findAll().stream()
                 .map(medecin -> medecinMapper.toDTO(medecin)).toList();
+    }
+
+    public Page<MedecinDTO> getAllMedecins(Pageable pageable){
+        return medecinRepository.findAll(pageable).map(medecinMapper::toDTO);
+    }
+    public Page<MedecinDTO> searchBySpecialite(String specialite, Pageable pageable){
+        return medecinRepository.findBySpecialite(specialite,pageable).map(medecinMapper::toDTO);
     }
 }

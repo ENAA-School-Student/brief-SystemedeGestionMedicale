@@ -25,4 +25,19 @@ public class GlobalExceptionHandler {
 
         return errors;
     }
+    @ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
+       @ResponseStatus(org.springframework.http.HttpStatus.UNAUTHORIZED)
+         public Map<String, String> handleBadCredentials(org.springframework.security.authentication.BadCredentialsException ex) {
+                Map<String, String> error = new HashMap<>();
+               error.put("error", "Nom d'utilisateur ou mot de passe incorrect");
+                return error;
+            }
+
+                @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+       @ResponseStatus(org.springframework.http.HttpStatus.FORBIDDEN)
+        public Map<String, String> handleAccessDenied(org.springframework.security.access.AccessDeniedException ex) {
+                 Map<String, String> error = new HashMap<>();
+                error.put("error", "Vous n'avez pas la permission d'accéder à cette ressource");
+                return error;
+             }
 }

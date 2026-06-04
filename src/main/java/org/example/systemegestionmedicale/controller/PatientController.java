@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.PatientDTO;
 import org.example.systemegestionmedicale.service.PatientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +25,6 @@ public class PatientController {
 
         return patientService.ajouterPatient(dto);
     }
-    @Operation(summary = "Lister tous les patients")
-    @GetMapping
-    public List<PatientDTO> getAllPatients(){
-        return patientService.getAllPatients();
-    }
-    @Operation(summary = "Trouver un patient par ID")
     @GetMapping("/{id}")
     public PatientDTO getById(@PathVariable Long id){
         return patientService.getPatientById(id);
@@ -43,4 +39,16 @@ public class PatientController {
     public void deletePatient(@PathVariable Long id){
          patientService.delete(id);
     }
+
+    @Operation(summary = "Lister tous les patients avec pagination et tri (ex: ?sort=nom,asc)")
+    @GetMapping
+    public Page<PatientDTO> getAllPatients(Pageable pageable) {
+        return patientService.getAllPatient(pageable);
+    }
+    @Operation(summary = "Rechercher patient par nom avec pagination")
+    @GetMapping("/search")
+   public Page<PatientDTO> searchByNom(@RequestParam String nom, Pageable pageable) {
+            return patientService.chercherByNom(nom, pageable);
+         }
+
 }

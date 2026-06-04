@@ -7,6 +7,8 @@ import org.example.systemegestionmedicale.Repository.PatientRepository;
 import org.example.systemegestionmedicale.mapper.DossierMedicalMapper;
 import org.example.systemegestionmedicale.model.DossierMedical;
 import org.example.systemegestionmedicale.model.Patient;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -50,5 +52,8 @@ public class DossierMedicalService {
         DossierMedical dossier = dossierMedicalRepository.findByPatientId(patientId)
                 .orElseThrow(() -> new RuntimeException("Dossier non trouvé pour ce patient"));
         return dossierMedicalMapper.toDTO(dossier);
+    }
+    public Page<DossierMedicalDTO> getAllDossiers(Pageable pageable) {
+           return dossierMedicalRepository.findAll(pageable).map(dossierMedicalMapper::toDTO);
     }
 }

@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.DossierMedicalDTO;
 import org.example.systemegestionmedicale.service.DossierMedicalService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +43,12 @@ public class DossierMedicalController {
     public DossierMedicalDTO consulterParPatient(@PathVariable Long patientId){
         return dossierMedicalService.consulterParPatient(patientId);
     }
+    @Operation(summary = "Lister tous les dossiers médicaux avec pagination")
+    @GetMapping
+   public Page<DossierMedicalDTO> getAllDossiers(Pageable pageable) {
+            return dossierMedicalService.getAllDossiers(pageable);
+         }
+
 
 
 }

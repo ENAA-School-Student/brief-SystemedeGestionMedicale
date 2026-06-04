@@ -13,7 +13,7 @@ Fonctionnalités Clés
 
 Stack Technique
 
-- Backend : Java 17, Spring Boot 4.0.6.
+- Backend : Java 17, Spring Boot 
 - Base de données : MySQL 8.0.
 - Migration de données : Flyway (Versionnage du schéma SQL).
 - Mapping & Productivité : MapStruct (DTOs), Lombok.

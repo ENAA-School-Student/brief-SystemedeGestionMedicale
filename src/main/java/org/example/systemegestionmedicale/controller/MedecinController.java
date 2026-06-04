@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.MedecinDTO;
 import org.example.systemegestionmedicale.service.MedecinService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +23,6 @@ public class MedecinController {
     public MedecinDTO creatMedecin(@Valid @RequestBody MedecinDTO dto){
         return medecinService.ajouterMedecin(dto);
     }
-    @Operation(summary = "Lister tous les medecins")
-    @GetMapping
-    public List<MedecinDTO> getAllMedecins(){
-        return medecinService.getAllMedecins();
-    }
-    @Operation(summary = "Trouver un medecin par ID")
     @GetMapping("/{id}")
     public MedecinDTO getById(@PathVariable Long id){
         return medecinService.getMedecinById(id);
@@ -41,5 +37,17 @@ public class MedecinController {
     public void deleteMedecin(@PathVariable Long id){
         medecinService.delete(id);
     }
+
+    @Operation(summary = "Lister tous les médecins avec pagination et tri (ex: ?sort=specialite,desc)")
+     @GetMapping
+    public Page<MedecinDTO> getAllMedecins(Pageable pageable) {
+             return medecinService.getAllMedecins(pageable);
+        }
+
+        @Operation(summary = "Rechercher médecin par spécialité avec pagination")
+        @GetMapping("/search")
+          public Page<MedecinDTO> searchBySpecialite(@RequestParam String specialite, Pageable pageable) {
+           return medecinService.searchBySpecialite(specialite, pageable);
+        }
 
 }
