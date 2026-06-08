@@ -7,6 +7,7 @@ import org.example.systemegestionmedicale.Repository.PatientRepository;
 import org.example.systemegestionmedicale.mapper.DossierMedicalMapper;
 import org.example.systemegestionmedicale.model.DossierMedical;
 import org.example.systemegestionmedicale.model.Patient;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class DossierMedicalService {
     private final DossierMedicalMapper dossierMedicalMapper;
     private final PatientRepository patientRepository;
 
+    @CacheEvict(value = "dossiers", allEntries = true)
     public DossierMedicalDTO creerDossier(DossierMedicalDTO dto){
         Patient patient = patientRepository.findById(dto.getPatientId())
                 .orElseThrow(()->new RuntimeException("patient introuvable"));

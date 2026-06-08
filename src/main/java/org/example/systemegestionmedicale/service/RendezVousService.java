@@ -10,6 +10,8 @@ import org.example.systemegestionmedicale.model.Medecin;
 import org.example.systemegestionmedicale.model.Patient;
 import org.example.systemegestionmedicale.model.RendezVous;
 import org.example.systemegestionmedicale.model.StatutRendezVous;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class RendezVousService {
     private final PatientRepository patientRepository;
     private final MedecinRepository medecinRepository;
 
+    @CacheEvict(value = "rendezvous", allEntries = true)
     public RendezVousDTO createRDV(RendezVousDTO dto){
         Patient patient = patientRepository.findById(dto.getPatientId())
                 .orElseThrow(()-> new RuntimeException("patient non trouvé"));
@@ -39,7 +42,7 @@ public class RendezVousService {
         return rendezVousMapper.toDTO(saved);
 
     }
-
+    @CacheEvict(value = "rendezvous", allEntries = true)
     public RendezVousDTO modifierRendezVous(Long id,RendezVousDTO dto){
         RendezVous existe = rendezVousRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("rendezvous introuvable"));
@@ -49,14 +52,14 @@ public class RendezVousService {
         }
         return rendezVousMapper.toDTO(rendezVousRepository.save(existe));
     }
-
+    @CacheEvict(value = "rendezvous", allEntries = true)
     public void annuleRDV(Long id){
         RendezVous rendezVous = rendezVousRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("rendezvous introuvable"));
         rendezVous.setStatut(StatutRendezVous.ANNULE);
         rendezVousRepository.save(rendezVous);
     }
-
+    @Cacheable(value = "rendezvous")
     public List<RendezVousDTO> listertous(){
         return rendezVousRepository.findAll().stream()
                 .map(rendezVous -> rendezVousMapper.toDTO(rendezVous))

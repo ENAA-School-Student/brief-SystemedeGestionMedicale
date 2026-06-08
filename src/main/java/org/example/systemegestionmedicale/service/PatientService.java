@@ -7,6 +7,8 @@ import org.example.systemegestionmedicale.Repository.PatientRepository;
 import org.example.systemegestionmedicale.mapper.PatientMapper;
 import org.example.systemegestionmedicale.model.DossierMedical;
 import org.example.systemegestionmedicale.model.Patient;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +26,7 @@ public class PatientService {
     private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
 
-
+    @CacheEvict(value = "patients", allEntries = true)
     public PatientDTO ajouterPatient(PatientDTO dto){
         Patient patient =patientMapper.toEntity(dto);
         patient.setUsername(dto.getUsername());
@@ -36,17 +38,19 @@ public class PatientService {
 
         return patientMapper.toDTO(saved);
     }
+    @Cacheable(value = "patients")
     public List<PatientDTO> getAllPatients(){
         return patientRepository.findAll().stream().map(patientMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "patients", key = "#id")
     public PatientDTO getPatientById(Long id){
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("patient non trouvé"));
         return patientMapper.toDTO(patient);
     }
-
+    @CacheEvict(value = "patients", allEntries = true)
     public PatientDTO modifierPatient(Long id,PatientDTO dto){
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("pateint introuvable"));
@@ -54,6 +58,7 @@ public class PatientService {
         return patientMapper.toDTO(patientRepository.save(patient));
     }
 
+    @CacheEvict(value = "patients", allEntries = true)
     public void delete(Long id){
         patientRepository.deleteById(id);
     }
@@ -63,6 +68,7 @@ public class PatientService {
                 .map(patient -> patientMapper.toDTO(patient)).toList();
     }
 
+    @Cacheable(value = "patients", key = "#id")
     public PatientDTO consulterPatient(Long id){
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("patient itrouvable avec id :" +id));
