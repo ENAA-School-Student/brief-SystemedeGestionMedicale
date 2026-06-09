@@ -21,7 +21,7 @@ public class MedecinService {
     private final MedecinMapper medecinMapper;
     private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
-    @CacheEvict(value = "patients", allEntries = true)
+    @CacheEvict(value = "medecins", allEntries = true)
     public MedecinDTO ajouterMedecin(MedecinDTO dto){
         Medecin medecin=medecinMapper.toEntity(dto);
         medecin.setUsername(dto.getUsername());
