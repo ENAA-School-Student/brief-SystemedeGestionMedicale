@@ -7,6 +7,8 @@ import org.example.systemegestionmedicale.Repository.PatientRepository;
 import org.example.systemegestionmedicale.mapper.DossierMedicalMapper;
 import org.example.systemegestionmedicale.model.DossierMedical;
 import org.example.systemegestionmedicale.model.Patient;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class DossierMedicalService {
     private final DossierMedicalMapper dossierMedicalMapper;
     private final PatientRepository patientRepository;
 
+    @CacheEvict(value = "dossiers", allEntries = true)
     public DossierMedicalDTO creerDossier(DossierMedicalDTO dto){
         Patient patient = patientRepository.findById(dto.getPatientId())
                 .orElseThrow(()->new RuntimeException("patient introuvable"));
@@ -33,7 +36,7 @@ public class DossierMedicalService {
         }
         return dossierMedicalMapper.toDTO(dossierMedicalRepository.save(dossier));
     }
-
+    @CacheEvict(value = "dossiers", key = "#id")
     public DossierMedicalDTO ajouterDiagnostic(Long id, String diagnostic){
         DossierMedical dossier = dossierMedicalRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("dossier medical introuvable"));
@@ -47,7 +50,7 @@ public class DossierMedicalService {
         dossier.setObservations(observation);
         return dossierMedicalMapper.toDTO(dossierMedicalRepository.save(dossier));
     }
-
+    @Cacheable(value = "dossiers", key = "#patientId")
     public DossierMedicalDTO consulterParPatient(Long patientId){
         DossierMedical dossier = dossierMedicalRepository.findByPatientId(patientId)
                 .orElseThrow(() -> new RuntimeException("Dossier non trouvé pour ce patient"));
