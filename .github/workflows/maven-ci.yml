@@ -2,15 +2,16 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     services:
+      # On garde MySQL et Redis au cas où certains tests en auraient besoin
       mysql:
         image: mysql:8.0
         env:
@@ -36,14 +37,8 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        # On force les paramètres de connexion pour les tests via la ligne de commande
-        run: |
-          mvn -B package --file pom.xml \
-          -Dspring.datasource.url=jdbc:mysql://localhost:3306/systemegestionMedicale \
-          -Dspring.datasource.username=root \
-          -Dspring.datasource.password=nouha23
-          -Dspring.data.redis.host=localhost \
-          -Dspring.data.redis.port=6379
+        # On active explicitement le profil 'test'
+        run: mvn -B package -Dspring.profiles.active=test
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
