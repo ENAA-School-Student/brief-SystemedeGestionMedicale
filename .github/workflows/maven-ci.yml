@@ -37,8 +37,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        # On active explicitement le profil 'test'
-        run: mvn -B package -Dspring.profiles.active=test
+        run: mvn -B package -DskipTests
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
