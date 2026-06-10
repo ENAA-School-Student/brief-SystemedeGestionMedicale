@@ -6,9 +6,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.systemegestionmedicale.DTO.DossierMedicalDTO;
 import org.example.systemegestionmedicale.service.DossierMedicalService;
+import org.example.systemegestionmedicale.service.PdfGeneratorService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
+import java.io.ByteArrayInputStream;
 
 @RestController
 @RequestMapping("/api/dossiersMedical")
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "DossierMedical",description = "gestion des dossierMedical")
 public class DossierMedicalController {
     private final DossierMedicalService dossierMedicalService;
+    private final PdfGeneratorService pdfGeneratorService;
 
     @Operation(summary = "créer dossierMedecal")
     @PostMapping
@@ -48,7 +56,28 @@ public class DossierMedicalController {
    public Page<DossierMedicalDTO> getAllDossiers(Pageable pageable) {
             return dossierMedicalService.getAllDossiers(pageable);
          }
+    @Operation(summary = "Exporter un dossier médical en PDF")
+    @GetMapping("/{patientId}/export/pdf")
+    public ResponseEntity<InputStreamResource> exportToPdf(@PathVariable Long patientId) {
 
 
+        DossierMedicalDTO dossier = dossierMedicalService.consulterParPatient(patientId);
 
+
+        ByteArrayInputStream bis = pdfGeneratorService.generateDossierMedicalPdf(dossier);
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(
+                "Content-Disposition",
+                "attachment; filename=dossier_medical_" + patientId + ".pdf"
+        );
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
 }
+
