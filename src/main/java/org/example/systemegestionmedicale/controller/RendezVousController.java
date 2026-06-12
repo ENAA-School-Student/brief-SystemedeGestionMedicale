@@ -62,8 +62,9 @@ public class RendezVousController {
     public Page<RendezVousDTO> searchByStatut(@RequestParam StatutRendezVous statut, Pageable pageable) {
         return rendezVousService.searchByStatut(statut, pageable);
     }
-    @GetMapping("/search")
-    public Page<RendezVousDTO> searchByDateRDV(@RequestParam Date date_rendez_vous,Pageable pageable){
+    @Operation(summary = "Rechercher rendez-vous par date avec pagination")
+    @GetMapping("/search-date")
+    public Page<RendezVousDTO> searchByDateRDV(@RequestParam @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.LocalDateTime date_rendez_vous, Pageable pageable){
         return rendezVousService.searchByDateRDV(date_rendez_vous,pageable);
     }
 }

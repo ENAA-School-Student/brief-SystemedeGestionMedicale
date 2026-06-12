@@ -85,8 +85,8 @@ public class RendezVousService {
     public Page<RendezVousDTO> searchByStatut(StatutRendezVous statut, Pageable pageable){
         return rendezVousRepository.findByStatut(statut,pageable).map(rendezVousMapper::toDTO);
     }
-    public Page<RendezVousDTO> searchByDateRDV(Date date_rendez_vous,Pageable pageable){
-        return rendezVousRepository.findByDate_rendez_vous(date_rendez_vous,pageable).map(rendezVousMapper::toDTO);
+    public Page<RendezVousDTO> searchByDateRDV(java.time.LocalDateTime dateRendezVous, Pageable pageable){
+        return rendezVousRepository.findByDateRendezVous(dateRendezVous, pageable).map(rendezVousMapper::toDTO);
     }
 
 }
